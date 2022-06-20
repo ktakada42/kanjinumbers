@@ -1,0 +1,27 @@
+openapi: 3.0.0
+info:
+  title: Dream Arts Kanji Numbers API
+  description: Kanji Numbers Transfer API.
+servers:
+  - url: http://localhost:8080/
+tags:
+  - name: N2K
+    description: Numbers to Kanji Transfer
+  # - name: K2N
+  #   description: Kanji to Numbers Transfer
+paths:
+  /v1/number2kanji/{numbers}:
+    get:
+      summary: Numbers to Kanji Transfer API
+      description: Numbers will be transferred to Kanji.
+      parameters:
+        name: numbers
+        in: path
+        description: Numbers should be transferred to Kanji.
+        required: true
+        type: string
+      response:
+        200:
+          description: Response in case of success
+          schemea:
+            type: string
