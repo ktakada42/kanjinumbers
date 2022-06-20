@@ -1,4 +1,4 @@
-openapi: 3.0.2
+openapi: 3.0.0
 info:
   title: "Kanji Numbers Transfer API"
   description: |-
@@ -8,7 +8,7 @@ info:
     2. Kanji Numbers will be transferred to Arabic Numbers.
   version: "1.0.0"
 servers:
-  - url: http://localhost:8080/
+  - url: 'http://localhost:8001'
 paths:
   /v1/number2kanji/{numbers}:
     get:
