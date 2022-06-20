@@ -8,7 +8,7 @@ info:
     2. Kanji Numbers will be transferred to Arabic Numbers.
   version: "1.0.0"
 servers:
-  - url: 'http://localhost:8001'
+  - url: http://localhost:8080
 paths:
   /v1/number2kanji/{numbers}:
     get:

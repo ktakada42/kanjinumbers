@@ -4,7 +4,7 @@ services:
   swagger-ui:
     image: swaggerapi/swagger-ui:latest
     ports:
-      - 127.0.0.1:8001:8080
+      - 127.0.0.1:3000:8080
     volumes:
       - ./api/openapi.yaml:/openapi.yaml
     environment:
