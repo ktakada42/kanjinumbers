@@ -6,6 +6,6 @@ services:
     ports:
       - 127.0.0.1:3000:8080
     environment:
-      SWAGGER_JSON: /api/api-document.yaml
+      SWAGGER_JSON: /api/openapi.yaml
     volumes:
       - ./api-document.yaml:/api/api-document.yaml:ro

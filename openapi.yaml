@@ -1,0 +1,48 @@
+openapi: 3.0.2
+info:
+  title: "Kanji Numbers Transfer API"
+  description: |-
+    <b>Specification of Kanji Number Transfer API.</b><br>
+    Provided 2 services:
+    1. Arabic Numbers will be transferred to Kanji Numbers (based on Chinese Characters).
+    2. Kanji Numbers will be transferred to Arabic Numbers.
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8080/
+paths:
+  /v1/number2kanji/{numbers}:
+    get:
+      tags:
+      - "NtoK"
+      summary: "Numbers to Kanji"
+      description: "Numbers will be transferred to Kanji"
+      parameters:
+      - name: "numbers"
+        in: "path"
+        description: "Numbers to be transferred to Kanji"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "successful operation"
+        "204":
+          description: "Invalid numbers"
+  /v1/kanji2number/{kanji}:
+    get:
+      tags:
+      - "KtoN"
+      summary: "Kanji to Numbers"
+      description: "Kanji will be transferred to Numbers"
+      parameters:
+      - name: "kanji"
+        in: "path"
+        description: "Kanji to be transferred to Number"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "204":
+          description: "Invalid kanji"
