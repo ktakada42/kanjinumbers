@@ -23,10 +23,12 @@ func HandleNumberToKanji(w http.ResponseWriter, r *http.Request) {
 	arr := strings.Split(u.Path, "/")
 	if len(arr) != 4 {
 		log.Println("Path invalid")
+		w.WriteHeader(http.StatusNoContent)
 		return
 	}
 	if !isPathParamValid(arr[3]) {
 		log.Println("Param invalid")
+		w.WriteHeader(http.StatusNoContent)
 		return
 	}
 	fmt.Fprintf(w, arr[3])
