@@ -3,10 +3,16 @@ package server
 import (
 	"log"
 	"net/http"
+
+	"kanjinumbers/pkg/server/handler"
 )
 
 // Serve HTTPサーバを起動する
 func Serve(addr string) {
+	/* ===== URLマッピングを行う ===== */
+	mappingURL()
+
+	/* ===== サーバの起動 ===== */
 	log.Println("Server running...")
 	err := http.ListenAndServe(addr, nil)
 	if err != nil {
@@ -17,6 +23,11 @@ func Serve(addr string) {
 // get GETリクエストを処理する
 func get(apiFunc http.HandlerFunc) http.HandlerFunc {
 	return httpMethod(apiFunc, http.MethodGet)
+}
+
+func mappingURL() {
+	http.HandleFunc("/v1/number2kanji/", get(handler.HandleNumberToKanji))
+	http.HandleFunc("/v1/kanji2number/", get(handler.HandleKanjiToNumber))
 }
 
 // httpMethod 指定したHTTPメソッドでAPIの処理を実行する
