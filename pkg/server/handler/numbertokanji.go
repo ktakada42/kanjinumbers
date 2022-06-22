@@ -31,7 +31,7 @@ func HandleNumberToKanji(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 		return
 	}
-	fmt.Fprintf(w, arr[3])
+	fmt.Fprintf(w, convertNumberToKanji(arr[3]))
 }
 
 func isPathParamValid(p string) bool {
@@ -46,4 +46,29 @@ func isPathParamValid(p string) bool {
 		return true
 	}
 	return false
+}
+
+func convertNumberToKanji(num string) (kanji string) {
+	n, _ := strconv.Atoi(num)
+	if n == 0 {
+		kanji = "零"
+		return
+	}
+	d := len(num)
+	revNum := strRev(num)
+	for sepCnt, n := range revNum {
+		kanji = string(n) + kanji
+		sepCnt++
+		if sepCnt%4 == 0 && sepCnt != d {
+			switch sepCnt / 4 {
+			case 1:
+				kanji = "万" + kanji
+			case 2:
+				kanji = "億" + kanji
+			case 3:
+				kanji = "兆" + kanji
+			}
+		}
+	}
+	return
 }
