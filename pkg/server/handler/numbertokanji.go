@@ -14,6 +14,8 @@ const (
 	max = 9999999999999999
 )
 
+var kanjiNumbers = map[string]string{"0": "零", "1": "壱", "2": "弐", "3": "参", "4": "四", "5": "五", "6": "六", "7": "七", "8": "八", "9": "九"}
+
 func HandleNumberToKanji(w http.ResponseWriter, r *http.Request) {
 	u, err := url.Parse(r.URL.Path)
 	if err != nil {
@@ -54,20 +56,31 @@ func convertNumberToKanji(num string) (kanji string) {
 		kanji = "零"
 		return
 	}
-	d := len(num)
+	digit := len(num)
 	revNum := strRev(num)
-	for sepCnt, n := range revNum {
-		kanji = string(n) + kanji
-		sepCnt++
-		if sepCnt%4 == 0 && sepCnt != d {
-			switch sepCnt / 4 {
+	for digitCount, n := range revNum {
+		if n != '0' {
+			switch digitCount % 4 {
 			case 1:
-				kanji = "万" + kanji
+				kanji = "拾" + kanji
 			case 2:
-				kanji = "億" + kanji
+				kanji = "百" + kanji
 			case 3:
-				kanji = "兆" + kanji
+				kanji = "千" + kanji
+			default:
+				if digitCount != digit {
+					switch digitCount / 4 {
+					case 1:
+						kanji = "万" + kanji
+					case 2:
+						kanji = "億" + kanji
+					case 3:
+						kanji = "兆" + kanji
+					default:
+					}
+				}
 			}
+			kanji = kanjiNumbers[string(n)] + kanji
 		}
 	}
 	return
