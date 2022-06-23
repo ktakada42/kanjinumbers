@@ -38,7 +38,7 @@ $ docker-compose up -d
 
 SwaggerUIサーバ起動後以下のURLからSwaggerUIへアクセスすることができます。
 
-SwaggerUI: <http://localhost:3000/>
+SwaggerUI: <http://localhost:3000/><br>
 定義ファイル: `./api/openapi.yaml`
 
 ## APIローカル起動方法
