@@ -12,8 +12,8 @@ import (
 
 var numKanji = map[string]int{"壱": 1, "弐": 2, "参": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
 
-// var separatorsEveryFourDigit = []int{1000000000000, 100000000, 10000, 1} // 1兆, 1億, 1万(numberstokanji.goで定義済)
-var separatorsOfFourDigit = []int{1000, 100, 10, 1}
+// var separatorsEveryFourDigit = []int{1000000000000, 100000000, 10000, 1} // 1兆, 1億, 1万 (numberstokanji.goで定義済)
+// var separatorsOfFourDigit = []int{1000, 100, 10, 1} // numberstokanji.goで定義済
 
 func HandleKanjiToNumber(w http.ResponseWriter, r *http.Request) {
 	u, err := url.Parse(r.URL.Path)

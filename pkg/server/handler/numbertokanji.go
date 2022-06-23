@@ -3,7 +3,6 @@ package handler
 import (
 	"fmt"
 	"log"
-	"math"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,6 +16,7 @@ const (
 
 var kanjiNum = map[int]string{1: "壱", 2: "弐", 3: "参", 4: "四", 5: "五", 6: "六", 7: "七", 8: "八", 9: "九"}
 var separatorsEveryFourDigit = []int{1000000000000, 100000000, 10000, 1} // 1兆, 1億, 1万
+var separatorsOfFourDigit = []int{1000, 100, 10, 1}
 var kanjiSeparatorsEveryFourDigit = []string{"兆", "億", "万", ""}
 var kanjiSeparatorsOfFourDigit = []string{"", "拾", "百", "千"}
 
@@ -74,21 +74,22 @@ func convertNumberToKanji(num string) (kanji string) {
 
 	// パラメーターを上から4桁ずつ配列に入れる
 	// Ex) 123,456,789 => {"0(兆)", "1(億)", "2345(万)", "6789"}
-	var separatedNumEveryFourDigit [4]int
+	var numSeparatedEveryFourDigit [4]int
 	for i, s := range separatorsEveryFourDigit {
-		separatedNumEveryFourDigit[i] = n / s
+		numSeparatedEveryFourDigit[i] = n / s
 		n %= s
 	}
 
 	// 4桁ずつ分けた数字を更に1桁ずつに区切って漢数字に変換、区切り桁を足す
 	// Ex) "2345(万)" => "弐" + "千" + "参" + "百" + "四" + "拾" + "五" + "万"
-	for i, s := range separatedNumEveryFourDigit {
+	for i, s := range numSeparatedEveryFourDigit {
 		if s != 0 {
-			for i := 3; i >= 0; i-- {
-				if s/int(math.Pow10(i)) != 0 {
-					kanji += kanjiNum[s/int(math.Pow10(i))] + kanjiSeparatorsOfFourDigit[i] // 漢数字に変換 + 「千 or 百 or 拾」を追加
+			for i := 0; i < 4; i++ {
+				sep := separatorsOfFourDigit[i]
+				if s/sep != 0 {
+					kanji += kanjiNum[s/sep] + kanjiSeparatorsOfFourDigit[i] // 漢数字に変換 + 「千 or 百 or 拾」を追加
 				}
-				s %= int(math.Pow10(i))
+				s %= sep
 			}
 			kanji += kanjiSeparatorsEveryFourDigit[i] // 区切り文字として、「兆 or 億 or 万」を追加
 		}
