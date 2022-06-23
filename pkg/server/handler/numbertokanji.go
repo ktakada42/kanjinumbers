@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"log"
+	"math"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -14,7 +15,10 @@ const (
 	max = 9999999999999999
 )
 
-var kanjiNumbers = map[string]string{"0": "零", "1": "壱", "2": "弐", "3": "参", "4": "四", "5": "五", "6": "六", "7": "七", "8": "八", "9": "九"}
+var kanjiNumbers = map[int]string{0: "", 1: "壱", 2: "弐", 3: "参", 4: "四", 5: "五", 6: "六", 7: "七", 8: "八", 9: "九"}
+var largeSeparatorsNum = []int{1000000000000, 100000000, 10000, 1} // 1兆, 1億, 1万
+var largeSeparatorsKanji = []string{"兆", "億", "万", ""}
+var smallSeparators = []string{"", "拾", "百", "千"}
 
 func HandleNumberToKanji(w http.ResponseWriter, r *http.Request) {
 	u, err := url.Parse(r.URL.Path)
@@ -56,31 +60,20 @@ func convertNumberToKanji(num string) (kanji string) {
 		kanji = "零"
 		return
 	}
-	digit := len(num)
-	revNum := strRev(num)
-	for digitCount, n := range revNum {
-		if n != '0' {
-			switch digitCount % 4 {
-			case 1:
-				kanji = "拾" + kanji
-			case 2:
-				kanji = "百" + kanji
-			case 3:
-				kanji = "千" + kanji
-			default:
-				if digitCount != digit {
-					switch digitCount / 4 {
-					case 1:
-						kanji = "万" + kanji
-					case 2:
-						kanji = "億" + kanji
-					case 3:
-						kanji = "兆" + kanji
-					default:
-					}
+	var separatedNum [4]int
+	for i, s := range largeSeparatorsNum {
+		separatedNum[i] = n / s
+		n %= s
+	}
+	for i, s := range separatedNum {
+		if s != 0 {
+			for i := 3; i >= 0; i-- {
+				if s/int(math.Pow10(i)) != 0 {
+					kanji += kanjiNumbers[s/int(math.Pow10(i))] + smallSeparators[i]
 				}
+				s %= int(math.Pow10(i))
 			}
-			kanji = kanjiNumbers[string(n)] + kanji
+			kanji += largeSeparatorsKanji[i]
 		}
 	}
 	return
