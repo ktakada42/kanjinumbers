@@ -37,7 +37,7 @@ func HandleNumberToKanji(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 有効でないパラメーターは204
+	/* ===== パラメーターをValidate ===== */
 	// Ex) /v1/number2kanji/a => 204
 	// Ex) /v1/number2kanji/-1 => 204
 	// Ex) /v1/number2kanji/9999999999999999999999999999 => 204
