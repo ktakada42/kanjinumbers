@@ -177,8 +177,8 @@ func convertEveryKanjiToNumber(digit string) (num int, err error) {
 		num, isValidChar := numKanji[digit]
 		if !isValidChar {
 			err = errors.New("Param invalid")
-			return num, err
 		}
+		return num, err
 	}
 	return num, err
 }
