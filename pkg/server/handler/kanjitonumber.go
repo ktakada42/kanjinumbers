@@ -8,6 +8,8 @@ import (
 	"strings"
 )
 
+var validChar string = "壱弐参四五六七八九拾百千万億兆"
+
 func HandleKanjiToNumber(w http.ResponseWriter, r *http.Request) {
 	u, err := url.Parse(r.URL.Path)
 	if err != nil {
@@ -15,13 +17,43 @@ func HandleKanjiToNumber(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	arr := strings.Split(u.Path, "/")
-	if len(arr) != 4 {
+
+	// パラメーターの数が合わないと204
+	// Ex) /v1/kanji2number/壱百二拾三/四百五拾六 => 204
+	// Ex) /v1/kanji2number/ => 204
+	if len(arr) != 4 || arr[3] == "" {
 		log.Println("Path invalid")
+		w.WriteHeader(http.StatusNoContent)
 		return
 	}
-	if !isPathParamValid(arr[3]) {
-		log.Println("Param invalid")
+
+	fmt.Fprintf(w, convertKanjiToNumber(arr[3]))
+}
+
+func convertKanjiToNumber(kanji string) (num string) {
+	if kanji == "零" {
+		num = "0"
 		return
 	}
-	fmt.Fprintf(w, arr[3])
+	if isContainedOnlyValidChar(kanji) {
+		return "true"
+	}
+	return "false"
+}
+
+func isContainedOnlyValidChar(kanji string) bool {
+	haystack := []rune(validChar)
+	needles := []rune(kanji)
+	for _, n := range needles {
+		found := false
+		for _, h := range haystack {
+			if h == n {
+				found = true
+			}
+		}
+		if !found {
+			return false
+		}
+	}
+	return true
 }
