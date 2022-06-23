@@ -18,7 +18,7 @@ var kanjiNum = map[int]string{1: "壱", 2: "弐", 3: "参", 4: "四", 5: "五", 
 var separatorsEveryFourDigit = []int{1000000000000, 100000000, 10000, 1} // 1兆, 1億, 1万
 var separatorsOfFourDigit = []int{1000, 100, 10, 1}
 var kanjiSeparatorsEveryFourDigit = []string{"兆", "億", "万", ""}
-var kanjiSeparatorsOfFourDigit = []string{"", "拾", "百", "千"}
+var kanjiSeparatorsOfFourDigit = []string{"千", "百", "拾", ""}
 
 func HandleNumberToKanji(w http.ResponseWriter, r *http.Request) {
 	u, err := url.Parse(r.URL.Path)
