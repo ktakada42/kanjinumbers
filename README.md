@@ -45,3 +45,9 @@ SwaggerUI: <http://localhost:3000/> <br>
 ```
 $ go run ./cmd/main.go
 ```
+
+## テスト
+```
+$ go test -timeout 0 ./test
+```
+を実行することで、有効なパラメータ(0 ~ 9,999,999,999,999,999)に関しテストが可能です。
