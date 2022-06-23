@@ -34,12 +34,12 @@ API仕様はSwaggerUIを利用して閲覧します。
 ```
 $ docker-compose up -d
 ```
-を実行することでローカルのDocker上にSwaggerUIサーバが起動します。<br>
-<br>
+を実行することでローカルのDocker上にSwaggerUIサーバが起動します。
+
 SwaggerUIサーバ起動後以下のURLからSwaggerUIへアクセスすることができます。
 
-SwaggerUI: <http://localhost:3000/> <br> 
-定義ファイル: `./api/openapi.yaml`<br>
+SwaggerUI: <http://localhost:3000/>
+定義ファイル: `./api/openapi.yaml`
 
 ## APIローカル起動方法
 ```
