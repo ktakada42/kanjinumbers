@@ -32,7 +32,7 @@ func HandleKanjiToNumber(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	num, err := convertKanjiToNumber(arr[3])
+	num, err := ConvertKanjiToNumber(arr[3])
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusNoContent)
@@ -41,7 +41,7 @@ func HandleKanjiToNumber(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, strconv.Itoa(num))
 }
 
-func convertKanjiToNumber(kanji string) (int, error) {
+func ConvertKanjiToNumber(kanji string) (int, error) {
 	var num int
 	var err error
 

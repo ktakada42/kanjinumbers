@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	min = 0
-	max = 9999999999999999
+	Min = 0
+	Max = 9999999999999999
 )
 
 var kanjiNum = map[int]string{1: "壱", 2: "弐", 3: "参", 4: "四", 5: "五", 6: "六", 7: "七", 8: "八", 9: "九"}
@@ -47,7 +47,7 @@ func HandleNumberToKanji(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, convertNumberToKanji(arr[3]))
+	fmt.Fprintf(w, ConvertNumberToKanji(arr[3]))
 }
 
 func isPathParamValid(p string) bool {
@@ -59,13 +59,13 @@ func isPathParamValid(p string) bool {
 	if p[0] == '+' {
 		return false
 	}
-	if min <= n && n <= max {
+	if Min <= n && n <= Max {
 		return true
 	}
 	return false
 }
 
-func convertNumberToKanji(num string) (kanji string) {
+func ConvertNumberToKanji(num string) (kanji string) {
 	n, _ := strconv.Atoi(num)
 	if n == 0 {
 		kanji = "零"
