@@ -23,7 +23,7 @@ func HandleKanjiToNumber(w http.ResponseWriter, r *http.Request) {
 	}
 	arr := strings.Split(u.Path, "/")
 
-	// パラメーターの数が1つ以上か、パラメーターが無いと204
+	// パラメーターの数が2つ以上か、パラメーターが無いと204
 	// Ex) /v1/kanji2number/壱百弐拾参/四百五拾六 => 204
 	// Ex) /v1/kanji2number/ => 204
 	if len(arr) != 4 || arr[3] == "" {

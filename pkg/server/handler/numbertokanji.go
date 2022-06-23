@@ -28,10 +28,10 @@ func HandleNumberToKanji(w http.ResponseWriter, r *http.Request) {
 	}
 	arr := strings.Split(u.Path, "/")
 
-	// パラメーターの数が1つ以上か、パラメーターが無いと204
+	// パラメーターの数が2つ以上か、パラメーターが無いと204
 	// Ex) /v1/number2kanji/123/456 => 204
 	// Ex) /v1/number2kanji/ => 204
-	if len(arr) != 4 {
+	if len(arr) != 4 || arr[3] == "" {
 		log.Println("Path invalid")
 		w.WriteHeader(http.StatusNoContent)
 		return
