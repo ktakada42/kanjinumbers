@@ -17,8 +17,8 @@ const (
 
 var kanjiNumbers = map[int]string{0: "", 1: "壱", 2: "弐", 3: "参", 4: "四", 5: "五", 6: "六", 7: "七", 8: "八", 9: "九"}
 var largeSeparatorsNum = []int{1000000000000, 100000000, 10000, 1} // 1兆, 1億, 1万
-var largeSeparatorsKanji = []string{"兆", "億", "万", ""}             // 桁区切り(大)
-var smallSeparators = []string{"", "拾", "百", "千"}                  // 桁区切り(小)
+var largeSeparatorsKanji = []string{"兆", "億", "万", ""}
+var smallSeparators = []string{"", "拾", "百", "千"}
 
 func HandleNumberToKanji(w http.ResponseWriter, r *http.Request) {
 	u, err := url.Parse(r.URL.Path)
@@ -28,8 +28,8 @@ func HandleNumberToKanji(w http.ResponseWriter, r *http.Request) {
 	}
 	arr := strings.Split(u.Path, "/")
 
-	// パラメーターの数が合わないと204
-	// Ex) /v1/number2kanji/123/123 => 204
+	// パラメーターの数が1つ以上か、パラメーターが無いと204
+	// Ex) /v1/number2kanji/123/456 => 204
 	// Ex) /v1/number2kanji/ => 204
 	if len(arr) != 4 {
 		log.Println("Path invalid")
@@ -37,7 +37,7 @@ func HandleNumberToKanji(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 変換できないパラメーターは204
+	// 有効でないパラメーターは204
 	// Ex) /v1/number2kanji/a => 204
 	// Ex) /v1/number2kanji/-1 => 204
 	// Ex) /v1/number2kanji/9999999999999999999999999999 => 204
@@ -73,23 +73,24 @@ func convertNumberToKanji(num string) (kanji string) {
 	}
 
 	// パラメーターを上から4桁ずつ配列に入れる
-	// Ex) 123,456,789 => [0(兆), 1(億), 2345(万), 6789]
+	// Ex) 123,456,789 => {"0(兆)", "1(億)", "2345(万)", "6789"}
 	var separatedNum [4]int
 	for i, s := range largeSeparatorsNum {
 		separatedNum[i] = n / s
 		n %= s
 	}
 
-	// 4桁ずつ分けた数字を更に桁区切り(小)で区切る
+	// 4桁ずつ分けた数字を更に1桁ずつに区切って漢数字に変換、区切り桁を足す
+	// Ex) "2345(万)" => "弐" + "千" + "参" + "百" + "四" + "拾" + "五" + "万"
 	for i, s := range separatedNum {
 		if s != 0 {
 			for i := 3; i >= 0; i-- {
 				if s/int(math.Pow10(i)) != 0 {
-					kanji += kanjiNumbers[s/int(math.Pow10(i))] + smallSeparators[i]
+					kanji += kanjiNumbers[s/int(math.Pow10(i))] + smallSeparators[i] // 漢数字に変換 + 「千 or 百 or 拾」を追加
 				}
 				s %= int(math.Pow10(i))
 			}
-			kanji += largeSeparatorsKanji[i] // 桁区切り(大)を追加
+			kanji += largeSeparatorsKanji[i] // 区切り文字として、「兆 or 億 or 万」を追加
 		}
 	}
 	return
