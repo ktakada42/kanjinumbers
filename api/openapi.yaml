@@ -2,47 +2,60 @@ openapi: 3.0.0
 info:
   title: "Kanji Numbers Transfer API"
   description: |-
-    <b>Specification of Kanji Number Transfer API.</b><br>
-    Provided 2 services:
-    1. Arabic Numbers will be transferred to Kanji Numbers (based on Chinese Characters).
-    2. Kanji Numbers will be transferred to Arabic Numbers.
+    <b>Kanji Numbers Transfer API仕様</b><br>
+    アラビア数字=>漢数字、漢数字=>アラビア数字への変換を行うAPI:
+    1. number2kanji: アラビア数字=>漢数字に変換。
+       - 1, 2, 3, 10については、それぞれ大字である「壱」「弐」「参」「拾」に変換する。
+       - 拾、百、千、万、億、兆それぞれの位が 1 のとき、1 を省略しない ( 1000 =>「壱千」)。
+       - 取り扱い可能な数字の範囲は、0 以上、9999 兆 9999 億 9999 万 9999 以下の整数値とする。
+    
+    2. 漢数字=>アラビア数字に変換。
+       - 取り扱い可能な漢数字の範囲は、「零」から「九千九百九拾九兆九千九百九拾九億九千九百九拾九万九千九百九拾九」までとする。
   version: "1.0.0"
 servers:
   - url: http://localhost:8080
 paths:
-  /v1/number2kanji/{numbers}:
+  /v1/number2kanji/{アラビア数字}:
     get:
       tags:
-      - "NtoK"
-      summary: "Numbers to Kanji"
-      description: "Numbers will be transferred to Kanji"
+      - "number2kanji"
       parameters:
-      - name: "numbers"
+      - name: "アラビア数字"
         in: "path"
-        description: "Numbers to be transferred to Kanji"
+        description: "変換元のアラビア数字"
         required: true
         schema:
           type: "integer"
+          example: "Ex) 123456789"
       responses:
         "200":
-          description: "successful operation"
+          description: "A successful response."
+          content:
+            apppplication/json:
+              schema:
+                type: "string"
+                example: "壱億弐千参百四拾五万六千七百八拾九"
         "204":
-          description: "Invalid numbers"
-  /v1/kanji2number/{kanji}:
+          description: "A failed response to invalid parameter."
+  /v1/kanji2number/{漢数字}:
     get:
       tags:
-      - "KtoN"
-      summary: "Kanji to Numbers"
-      description: "Kanji will be transferred to Numbers"
+      - "kanji2number"
       parameters:
-      - name: "kanji"
+      - name: "漢数字"
         in: "path"
-        description: "Kanji to be transferred to Number"
+        description: "変換元の漢数字"
         required: true
         schema:
           type: "string"
+          example: "Ex) 壱億弐千参百四拾五万六千七百八拾九"
       responses:
         "200":
-          description: "successful operation"
+          description: "A successful response."
+          content:
+            apppplication/json:
+              schema:
+                type: "string"
+                example: "123456789"
         "204":
-          description: "Invalid kanji"
+          description: "A failed response to invalid parameter."
