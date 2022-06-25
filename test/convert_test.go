@@ -15,7 +15,7 @@ func TestConvertValueCompare(t *testing.T) {
 			kanji := handler.ConvertNumberToKanji(n)
 			num, _ := handler.ConvertKanjiToNumber(kanji)
 			if i == num {
-				// t.Logf("\x1b[32m\nparameter %d: kanji: %s\n\x1b[0m", i, kanji)
+				t.Logf("\x1b[32m\nparameter %d: kanji: %s\n\x1b[0m", i, kanji)
 			} else {
 				t.Fatalf("\x1b[31m\nparameter %d: kanji: %s\n\x1b[0m", i, kanji)
 			}
@@ -29,7 +29,7 @@ func TestConvertValueCompare(t *testing.T) {
 			kanji := handler.ConvertNumberToKanji(n)
 			num, _ := handler.ConvertKanjiToNumber(kanji)
 			if i == num {
-				// t.Logf("\x1b[32m\nparameter %d: kanji: %s\n\x1b[0m", i, kanji)
+				t.Logf("\x1b[32m\nparameter %d: kanji: %s\n\x1b[0m", i, kanji)
 			} else {
 				t.Fatalf("\x1b[31m\nparameter %d: kanji: %s\n\x1b[0m", i, kanji)
 			}
@@ -43,7 +43,7 @@ func TestConvertValueCompare(t *testing.T) {
 			kanji := handler.ConvertNumberToKanji(n)
 			num, _ := handler.ConvertKanjiToNumber(kanji)
 			if i == num {
-				// t.Logf("\x1b[32m\nparameter %d: kanji: %s\n\x1b[0m", i, kanji)
+				t.Logf("\x1b[32m\nparameter %d: kanji: %s\n\x1b[0m", i, kanji)
 			} else {
 				t.Fatalf("\x1b[31m\nparameter %d: kanji: %s\n\x1b[0m", i, kanji)
 			}
@@ -57,7 +57,7 @@ func TestConvertValueCompare(t *testing.T) {
 			kanji := handler.ConvertNumberToKanji(n)
 			num, _ := handler.ConvertKanjiToNumber(kanji)
 			if i == num {
-				// t.Logf("\x1b[32m\nparameter %d: kanji: %s\n\x1b[0m", i, kanji)
+				t.Logf("\x1b[32m\nparameter %d: kanji: %s\n\x1b[0m", i, kanji)
 			} else {
 				t.Fatalf("\x1b[31m\nparameter %d: kanji: %s\n\x1b[0m", i, kanji)
 			}
