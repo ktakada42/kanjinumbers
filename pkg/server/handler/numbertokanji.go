@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	Min = 0
-	Max = 9999999999999999
+	min = 0
+	max = 9999999999999999
 )
 
 var kanjiNum = map[int]string{1: "壱", 2: "弐", 3: "参", 4: "四", 5: "五", 6: "六", 7: "七", 8: "八", 9: "九"}
@@ -59,7 +59,7 @@ func isPathParamValid(p string) bool {
 	if p[0] == '+' {
 		return false
 	}
-	if Min <= n && n <= Max {
+	if min <= n && n <= max {
 		return true
 	}
 	return false
