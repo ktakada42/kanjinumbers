@@ -29,7 +29,7 @@
 - Go
 - docker / docker-compose
 
-### API仕様
+## API仕様
 API仕様はSwaggerUIを利用して閲覧します。
 ```
 $ docker-compose up -d
