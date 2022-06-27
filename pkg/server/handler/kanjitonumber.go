@@ -49,7 +49,7 @@ func ConvertKanjiToNumber(kanji string) (int, error) {
 		return num, err
 	}
 
-	// 有効なパラメーターの最大長は31文字
+	// 有効なパラメーターの最大長は31文字(x千x百x拾x兆x千x百x拾x億x千x百x拾x万x千x百x拾x)
 	if len([]rune(kanji)) > 31 {
 		err = errors.New("Param invalid")
 		return num, err
@@ -84,7 +84,7 @@ func ConvertKanjiToNumber(kanji string) (int, error) {
 	return num, err
 }
 
-// パラメーターを上から4桁ずつ配列に入れる
+// separateKanjiEveryFourDigit パラメーターを上から4桁ずつ配列に入れる
 // Ex) 壱千弐百参拾四億五千六百七拾八 => {"", "壱千弐百参拾四", "", "五千六百七拾八"}
 
 // この時点では、桁区切り文字の前に何らかの文字列があるかどうかのみをValidate
@@ -122,7 +122,7 @@ func separateKanjiEveryFourDigit(kanji string) (kanjiSeparatedEveryFourDigit [4]
 	return
 }
 
-// 4桁ずつ分けた数字を更に1桁ずつに区切る
+// separateKanjiEveryDigit 4桁ずつ分けた数字を更に1桁ずつに区切る
 
 // この時点では、桁区切り文字の前に何らかの文字列があるかどうかのみをValidate
 // Ex) "千", "壱千百", "千壱百" => 204
@@ -159,7 +159,7 @@ func separateKanjiEveryDigit(kanjiSeparatedEveryFourDigit string) (kanjiSeparate
 	return
 }
 
-// 1桁ずつに区切った漢数字を数字に変換
+// convertEveryKanjiToNumber 1桁ずつに区切った漢数字を数字に変換
 func convertEveryKanjiToNumber(digit string) (num int, err error) {
 
 	// 1桁ずつに区切った文字列がそれぞれ1文字 or 空文字かをValidate

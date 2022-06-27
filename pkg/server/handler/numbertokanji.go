@@ -84,10 +84,10 @@ func ConvertNumberToKanji(num string) (kanji string) {
 	// Ex) "2345(万)" => "弐" + "千" + "参" + "百" + "四" + "拾" + "五" + "万"
 	for i, s := range numSeparatedEveryFourDigit {
 		if s != 0 {
-			for i := 0; i < 4; i++ {
-				sep := separatorsOfFourDigit[i]
+			for j := 0; j < 4; j++ {
+				sep := separatorsOfFourDigit[j]
 				if s/sep != 0 {
-					kanji += kanjiNum[s/sep] + kanjiSeparatorsOfFourDigit[i] // 漢数字に変換 + 「千 or 百 or 拾」を追加
+					kanji += kanjiNum[s/sep] + kanjiSeparatorsOfFourDigit[j] // 漢数字に変換 + 「千 or 百 or 拾」を追加
 				}
 				s %= sep
 			}

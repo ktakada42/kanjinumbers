@@ -36,7 +36,7 @@ func httpMethod(apiFunc http.HandlerFunc, method string) http.HandlerFunc {
 
 		// CORS対応
 		w.Header().Add("Access-Control-Allow-Origin", "*")
-		w.Header().Add("Access-Control-Allow-Headers", "Content-Type,Accept,Origin,x-token")
+		w.Header().Add("Access-Control-Allow-Headers", "Content-Type,Accept,Origin")
 
 		// プリフライトリクエストは処理を通さない
 		if r.Method == http.MethodOptions {
