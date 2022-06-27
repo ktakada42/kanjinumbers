@@ -45,6 +45,7 @@ SwaggerUI: <http://localhost:3000/><br>
 ```
 $ go run ./cmd/main.go
 ```
+上記コマンド実行後、SwaggerUIの各API定義の「Try it out」からlocalhost:8080に対して実際にリクエストを行い、APIの動作確認を行うことができます。
 
 ## テスト方法
 ```
